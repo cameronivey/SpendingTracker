@@ -1,4 +1,4 @@
-﻿@ModelType AddTransactionPageViewModel
+﻿@ModelType AddTransactionViewModel
 
 @Code
     ViewData("Title") = "AddTransaction"
@@ -11,43 +11,22 @@ End Code
         @Using (Html.BeginForm("AddTransaction", "Transaction"))
             @<fieldset>
                  <div class="form-group" style="float: left">
-                     <label for="yearSelect" style="float: left">Year:</label>
-                     <select name="year" class="form-control" id="yearSelect" style="float: left">
-                         <option value="2015"> 2015</option>
-                         <option value="2016"> 2016</option>
-                     </select>
+                     @Html.LabelFor(Function(m) m.Year)
+                     @Html.DropDownListFor(Function(m) m.Year, Constants.Year_List, New With {Key .class = "form-control", .style = "float:left"})
                  </div>
 
                  <div class="form-group" style="float: left">
-                     <label for="monthSelect">Month:</label>
-                     <select name="month" class="form-control" id="monthSelect">
-                         <option selected disabled></option>
-                         <option value="January"> January</option>
-                         <option value="February"> February</option>
-                         <option value="March"> March</option>
-                         <option value="April"> April</option>
-                         <option value="May"> May</option>
-                         <option value="June"> June</option>
-                         <option value="July"> July</option>
-                         <option value="August"> August</option>
-                         <option value="September"> September</option>
-                         <option value="October"> October</option>
-                         <option value="November"> November</option>
-                         <option value="December"> December</option>
-                     </select>
+                     @Html.LabelFor(Function(m) Model.Month)
+                     @Html.DropDownListFor(Function(m) Model.Month, Constants.Month_List, New With {Key .class = "form-control", .style = "float: left"})
                  </div>
 
-                <div class="form-group" style="width: 150px">
-                    <select name="category" class="form-control" id="categorySelect">
-                        @For Each category In Model.Categories
-                            @<option value="@category.Id">@category.Name</option>
-                        Next
-                    </select>
-                </div>
+                 <div class="form-group" style="clear: both">
+                     @Html.DropDownListFor(Function(m) Model.CategoryId, Constants.Category_SelectList, New With {Key .class = "form-control", .style = "float: left; width: 120px"})<br />
+                 </div>
 
-                <input name="description" class="form-control" type="text" maxlength="20" placeholder="Description" style="width: 200px" /><br />
+                @Html.TextBoxFor(Function(m) Model.Description, New With {Key .class = "form-control", .maxlength = "20", .style = "width: 200px", .placeholder = "Description"})<br />
 
-                <input name="cost" class="form-control" type="text" maxlength="7" placeholder="$$$" style="width: 80px" /><br />
+                @Html.TextBoxFor(Function(m) Model.Cost, New With {Key .class = "form-control", .maxlength = "7", .style = "width: 80px", .placeholder = "$$$"})<br />
 
                 <button type="submit" class="btn btn-success">Add Transaction</button>
             </fieldset>
@@ -62,7 +41,7 @@ End Code
                  <th style="width: 25%">Month</th>
                  <th style="width: 35%">Category</th>
                  <th style="width: 40%">Description</th>
-                 <th style="width: 10%">Cost</th>
+                 <th style="width: 10%">Amount</th>
              </tr>
             @For Each transaction In Model.RecentTransactions
                 @<tr>

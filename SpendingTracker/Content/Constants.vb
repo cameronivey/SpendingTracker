@@ -21,14 +21,20 @@
                     New SelectListItem() With {.Value = "2016", .Text = "2016"}
                 }
 
-    Public Shared Property Category_List As IEnumerable(Of SelectListItem) = New List(Of SelectListItem) From
+    Public Shared Property Category_SelectList As IEnumerable(Of SelectListItem) = New List(Of SelectListItem) From
                {
                    New SelectListItem() With {.Value = "1", .Text = "Food"},
                    New SelectListItem() With {.Value = "2", .Text = "Alcohol / Bars"},
                    New SelectListItem() With {.Value = "3", .Text = "Entertainment"},
                    New SelectListItem() With {.Value = "4", .Text = "Shopping"},
                    New SelectListItem() With {.Value = "5", .Text = "Needs"},
-                   New SelectListItem() With {.Value = "6", .Text = "Other"}
+                   New SelectListItem() With {.Value = "6", .Text = "Other"},
+                   New SelectListItem() With {.Value = "10", .Text = "Income"}
                }
+
+    Public Shared Property Category_List As List(Of String) = New List(Of String) From
+        {
+            "Food", "AlcoholBars", "Entertainment", "Shopping", "Needs", "Other"
+        }
 
 End Class

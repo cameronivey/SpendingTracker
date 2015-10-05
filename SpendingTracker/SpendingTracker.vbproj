@@ -229,6 +229,7 @@
     <Compile Include="ViewModels\AddTransactionPageViewModel.vb" />
     <Compile Include="ViewModels\AddTransactionViewModel.vb" />
     <Compile Include="ViewModels\CategoriesViewModel.vb" />
+    <Compile Include="ViewModels\TotalsViewModel.vb" />
     <Compile Include="ViewModels\EditTransactionViewModel.vb" />
     <Compile Include="ViewModels\TransactionsViewModel.vb" />
   </ItemGroup>

@@ -30,11 +30,13 @@ Namespace Migrations
             context.Categories.AddOrUpdate(
                 Function(c) c.Name,
                 New Category() With {.Name = "Food"},
-                New Category() With {.Name = "Alcohol / Bars"},
+                New Category() With {.Name = "AlcoholBars"},
                 New Category() With {.Name = "Entertainment"},
                 New Category() With {.Name = "Shopping"},
                 New Category() With {.Name = "Needs"},
-                New Category() With {.Name = "Other"})
+                New Category() With {.Name = "Other"},
+                New Category() With {.Name = "Income"})
+
 
         End Sub
 

@@ -10,86 +10,91 @@ End Code
     <h2 class="page-header">Transactions</h2>
 
     <div class="row">
-        <a href="/Transaction/AddTransaction">Add A Transaction</a>
+        @Using (Html.BeginForm("GetTransactions", "Transaction"))
 
-        <div Class="form-group" style="float: left">
-            <Label for="yearSelect" style="float: left">Year:</label>
-            <select name="year" Class="form-control" id="yearSelect" style="float: left">
-                <option value = "2015" > 2015</Option>
-                <option value = "2016" > 2016</Option>
-            </select>
-        </div>
+            @<div Class="form-group" style="float: left">
+                @Html.DropDownListFor(Function(m) Model.Year, Constants.Year_List, New With {Key .class = "form-control", .style = "float: left"})
+            </div>
 
-      <div Class="form-group" style="float: left">
-            <Label for="monthSelect">Month:</label>
-            <select name="month" Class="form-control" id="monthSelect" onchange="changeMonth()">
-                <option value = "All" > All</Option>
-                <option value = "January" > January</Option>
-                <option value = "February" > February</Option>
-                <option value = "March" > March</Option>
-                <option value = "April" > April</Option>
-                <option value = "May" > May</Option>
-                <option value = "June" > June</Option>
-                <option value = "July" > July</Option>
-                <option value = "August" > August</Option>
-                <option value = "September"> September</Option>
-                <option value = "October" > October</Option>
-                <option value = "November" > November</Option>
-                <option value = "December" > December</Option>
-            </select>
-        </div>
-  
+            @<div Class="form-group" style="float: left">
+                @Html.DropDownListFor(Function(m) Model.Month, Constants.Month_List, New With {Key .class = "form-control", .style = "float: left"})
+            </div>
+
+            @<button type="submit" class="btn btn-primary">Filter</button>
+
+
+            @<div style = "float: right;" >
+                <a href="/Transaction/AddTransaction" class="btn btn-primary">Add A Transaction</a>
+            </div>
+        End Using
+
     </div>
 
-    <div Class="row">
-        <div Class="col-lg-2">
-            <Table>
-                <caption> Food</caption>
-                @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = "Food")
-                    @<tr><td>@transaction.Description, @transaction.Cost</td></tr>
-                Next
-            </table>
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a data-toggle="tab" href="#tab_Summary">Summary</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#tab_Food">Food</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#tab_AlcoholBars">Alcohol / Bars</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#tab_Entertainment">Entertainment</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#tab_Shopping">Shopping</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#tab_Needs">Needs</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#tab_Other">Other</a></li>
+    </ul>
+
+    
+    <div class="tab-content">
+        <div id="tab_Summary" class="tab-pane fade in active">
+            <div class="col-lg-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><td style="font-size: large">Total Spending For @Model.Month, @Model.Year</td></tr>
+                    </thead>
+                    @For Each category In Constants.Category_List
+                        @<tr>
+                            <td>@category</td>
+                            <td align="right">$@Model.Totals.SingleOrDefault(Function(t) t.Description = category).Total</td>
+                        </tr>
+                    Next
+                    <tfoot>
+                        <tr>
+                            <td><b>Total:</b></td>
+                            <td align="right">$@Model.Totals.SingleOrDefault(Function(t) t.Description = "Total Spent").Total</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <table class="table table-striped">
+                    @For Each total In Model.Totals.Where(Function(t) t.Type = "Sum")
+                        @<tr>
+                            <td>@total.Description</td>
+                            <td>$@total.Total</td>
+                        </tr>
+                    Next
+                </table>
+            </div>
         </div>
-        <div class="col-lg-2">
-            <table>
-                <caption>Alcohol/Bars</caption>
-                @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = "Alcohol/Bars")
-                    @<tr><td>@transaction.Description, @transaction.Cost</td></tr>
-                Next
-            </table>
-        </div>
-        <div class="col-lg-2">
-            <table>
-                <caption>Entertainment</caption>
-                @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = "Entertainment")
-                    @<tr><td>@transaction.Description, @transaction.Cost</td></tr>
-                Next
-            </table>
-        </div>
-        <div class="col-lg-2">
-            <table>
-                <caption>Shopping</caption>
-                @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = "Shopping")
-                    @<tr><td>@transaction.Description, @transaction.Cost</td></tr>
-                Next
-            </table>
-        </div>
-        <div class="col-lg-2">
-            <table>
-                <caption>Needs</caption>
-                @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = "Needs")
-                    @<tr><td>@transaction.Description, @transaction.Cost</td></tr>
-                Next
-            </table>
-        </div>
-        <div class="col-lg-2">
-            <table>
-                <caption>Other</caption>
-                @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = "Other")
-                    @<tr><td>@transaction.Description, @transaction.Cost</td></tr>
-                Next
-            </table>
-        </div>
+
+        @For Each category In Constants.Category_List
+            @<div id="tab_@category" class="tab-pane fade">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr><td style="font-size: large">@category in @Model.Month, @Model.Year</td></tr>
+                    </thead>
+                    @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = category)
+                        @<tr>
+                            <td>@transaction.Description</td>
+                            <td align="right">$@transaction.Cost</td>
+                        </tr>
+                    Next
+                    <tfoot>
+                        <tr>
+                            <td><b>Total:</b></td>
+                            <td align="right" style="background-color: darkgray">$@Model.Totals.SingleOrDefault(Function(t) t.Description = category).Total</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        Next
     </div>
 </body>
 
