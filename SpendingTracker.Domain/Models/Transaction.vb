@@ -1,0 +1,8 @@
+﻿Public Class Transaction
+    Public Property Id As Integer
+    Public Property Description As String
+    Public Property Cost As Decimal
+    Public Property Month As String
+    Public Property Year As Integer
+    Public Property Category As Category
+End Class
