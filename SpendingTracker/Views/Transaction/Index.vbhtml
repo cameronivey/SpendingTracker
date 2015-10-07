@@ -10,7 +10,7 @@ End Code
     <h2 class="page-header">Transactions</h2>
 
     <div class="row">
-        @Using (Html.BeginForm("GetTransactions", "Transaction"))
+        @Using (Html.BeginForm("Index", "Transaction"))
 
             @<div Class="form-group" style="float: left">
                 @Html.DropDownListFor(Function(m) Model.Year, Constants.Year_List, New With {Key .class = "form-control", .style = "float: left"})
@@ -83,12 +83,14 @@ End Code
                     @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = category)
                         @<tr>
                             <td>@transaction.Description</td>
+                            <td><a href="/Transaction/EditTransaction/@transaction.Id">Edit</a></td>
                             <td align="right">$@transaction.Cost</td>
                         </tr>
                     Next
                     <tfoot>
                         <tr>
                             <td><b>Total:</b></td>
+                            <td></td>
                             <td align="right" style="background-color: darkgray">$@Model.Totals.SingleOrDefault(Function(t) t.Description = category).Total</td>
                         </tr>
                     </tfoot>

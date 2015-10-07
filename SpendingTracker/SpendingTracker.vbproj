@@ -226,6 +226,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
+    <Compile Include="Services\TotalsCalculatorService.vb" />
     <Compile Include="ViewModels\AddTransactionPageViewModel.vb" />
     <Compile Include="ViewModels\AddTransactionViewModel.vb" />
     <Compile Include="ViewModels\CategoriesViewModel.vb" />
@@ -262,6 +263,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\Overview.js" />
     <Content Include="Scripts\Transactions.js" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.vbhtml" />
     <Content Include="Views\Account\ConfirmEmail.vbhtml" />
@@ -287,6 +289,8 @@
     <Content Include="Views\Transaction\Index.vbhtml" />
     <Content Include="Views\Category\Index.vbhtml" />
     <Content Include="Views\Transaction\EditTransaction.vbhtml" />
+    <Content Include="Views\Transaction\Income.vbhtml" />
+    <Content Include="Views\Transaction\Overview.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
