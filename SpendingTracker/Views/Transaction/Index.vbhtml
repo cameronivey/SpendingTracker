@@ -10,23 +10,17 @@ End Code
     <h2 class="page-header">Transactions</h2>
 
     <div class="row">
-        @Using (Html.BeginForm("Index", "Transaction"))
+        <div Class="form-group" style="float: left">
+            @Html.DropDownListFor(Function(m) Model.Year, Constants.Year_List, New With {Key .id = "yearNum", .class = "form-control", .style = "float: left", .onchange = "getExpenseTransactions()"})
+        </div>
 
-            @<div Class="form-group" style="float: left">
-                @Html.DropDownListFor(Function(m) Model.Year, Constants.Year_List, New With {Key .class = "form-control", .style = "float: left"})
-            </div>
+        <div Class="form-group" style="float: left">
+            @Html.DropDownListFor(Function(m) Model.Month, Constants.Month_List, New With {Key .id = "monthName", .class = "form-control", .style = "float: left", .onchange = "getExpenseTransactions()"})
+        </div>
 
-            @<div Class="form-group" style="float: left">
-                @Html.DropDownListFor(Function(m) Model.Month, Constants.Month_List, New With {Key .class = "form-control", .style = "float: left"})
-            </div>
-
-            @<button type="submit" class="btn btn-primary">Filter</button>
-
-
-            @<div style = "float: right;" >
-                <a href="/Transaction/AddTransaction" class="btn btn-primary">Add A Transaction</a>
-            </div>
-        End Using
+        <div style = "float: right;" >
+            <a href="/Transaction/AddTransaction" class="btn btn-primary">Add A Transaction</a>
+        </div>
 
     </div>
 
@@ -57,7 +51,7 @@ End Code
                     <tfoot>
                         <tr>
                             <td><b>Total:</b></td>
-                            <td align="right">$@Model.Totals.SingleOrDefault(Function(t) t.Description = "Total Spent").Total</td>
+                            <td align="right" style="border: inset">$@Model.Totals.SingleOrDefault(Function(t) t.Description = "Total Spent").Total</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -76,27 +70,29 @@ End Code
 
         @For Each category In Constants.Category_List
             @<div id="tab_@category" class="tab-pane fade">
-                <table class="table table-condensed">
-                    <thead>
-                        <tr><td style="font-size: large">@category in @Model.Month, @Model.Year</td></tr>
-                    </thead>
-                    @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = category)
-                        @<tr>
-                            <td>@transaction.Description</td>
-                            <td><a href="/Transaction/EditTransaction/@transaction.Id">Edit</a></td>
-                            <td align="right">$@transaction.Cost</td>
-                        </tr>
-                    Next
-                    <tfoot>
-                        <tr>
-                            <td><b>Total:</b></td>
-                            <td></td>
-                            <td align="right" style="background-color: darkgray">$@Model.Totals.SingleOrDefault(Function(t) t.Description = category).Total</td>
-                        </tr>
-                    </tfoot>
-                </table>
+                 <div class="col-lg-6">
+                     <table class="table table-condensed">
+                         <thead>
+                             <tr><td style="font-size: large">@category in @Model.Month, @Model.Year</td></tr>
+                         </thead>
+                         @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = category)
+                             @<tr>
+                                 <td>@transaction.Description</td>
+                                 <td><a href="/Transaction/EditTransaction/@transaction.Id">Edit</a></td>
+                                 <td align="right">$@transaction.Cost</td>
+                             </tr>
+                         Next
+                         <tfoot>
+                             <tr>
+                                 <td><b>Total:</b></td>
+                                 <td></td>
+                                 <td align="right" style="border: inset">$@Model.Totals.SingleOrDefault(Function(t) t.Description = category).Total</td>
+                             </tr>
+                         </tfoot>
+                     </table>
+                 </div>  
             </div>
-        Next
+         Next
     </div>
 </body>
 

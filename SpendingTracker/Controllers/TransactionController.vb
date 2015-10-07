@@ -11,22 +11,11 @@ Namespace Controllers
         ' GET: Transaction
 
         <HttpGet()>
-        Function Index() As ActionResult
-            Dim viewModel = New TransactionsViewModel
-            With viewModel
-                .Month = DateTime.Now().ToString("MMMM")
-                .Year = DateTime.Now().Year
-            End With
-
-            viewModel.Transactions = context.Transactions.Where(Function(t) t.Month = viewModel.Month And t.Year = viewModel.Year).ToList
-            viewModel.Totals.AddRange(GetCategoryTotals(viewModel.Transactions))
-            viewModel.Totals.AddRange(GetSummaryTotals(viewModel.Transactions))
-
-            Return View(viewModel)
-        End Function
-
-        <HttpPost()>
         Function Index(viewModel As TransactionsViewModel) As ActionResult
+            If viewModel.Month Is Nothing Or viewModel.Year = 0 Then
+                viewModel.Month = DateTime.Now().ToString("MMMM")
+                viewModel.Year = DateTime.Now().Year
+            End If
 
             viewModel.Transactions = context.Transactions.Where(Function(t) t.Month = viewModel.Month And t.Year = viewModel.Year).ToList
             viewModel.Totals.AddRange(GetCategoryTotals(viewModel.Transactions))
@@ -107,23 +96,6 @@ Namespace Controllers
             Return RedirectToAction("AddTransaction", "Transaction")
         End Function
 
-        '<HttpPost()>
-        'Function Income() As ActionResult
-        '    Dim viewModel = New TransactionsViewModel
-        '    With viewModel
-        '        .Month = DateTime.Now().ToString("MMMM")
-        '        .Year = DateTime.Now().Year
-        '    End With
-
-        '    viewModel.Transactions = context.Transactions.Where(Function(t) t.Category.Name = "Income" _
-        '                                                                    And t.Month = viewModel.Month _
-        '                                                                    And t.Year = viewModel.Year).ToList
-
-        '    viewModel.Totals.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Income", .Total = GetCostTotals(viewModel.Transactions)})
-
-        '    Return View(viewModel)
-        'End Function
-
         <HttpGet()>
         Function Income(viewModel As TransactionsViewModel) As ActionResult
             If viewModel.Month Is Nothing Or viewModel.Year = 0 Then
@@ -171,25 +143,6 @@ Namespace Controllers
 
             Return View(viewModel)
         End Function
-
-        'Function GetTransactions(viewModel As TransactionsViewModel)
-        '    If viewModel Is Nothing Or viewModel.Month Is Nothing Or viewModel.Year = 0 Then
-        '        Return RedirectToAction("Index")
-        '    End If
-
-        '    Dim context = New AppContext()
-
-        '    viewModel.Transactions = context.Transactions.Where(Function(t) t.Month = viewModel.Month And t.Year = viewModel.Year).ToList
-        '    viewModel.Totals.AddRange(GetCategoryTotals(viewModel.Transactions))
-        '    viewModel.Totals.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Spent Without Needs", .Total = GetCostTotals(viewModel.Transactions.Where(Function(t) t.Category.Name <> "Needs" And t.Category.Name <> "Income").ToList)})
-        '    viewModel.Totals.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Needs", .Total = GetCostTotals(viewModel.Transactions.Where(Function(t) t.Category.Name = "Needs").ToList)})
-        '    viewModel.Totals.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Spent", .Total = GetCostTotals(viewModel.Transactions.Where(Function(t) t.Category.Name <> "Income").ToList)})
-        '    viewModel.Totals.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Income", .Total = GetCostTotals(viewModel.Transactions.Where(Function(t) t.Category.Name = "Income").ToList)})
-        '    viewModel.Totals.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Net Income", .Total = viewModel.Totals.SingleOrDefault(Function(total) total.Description = "Total Income").Total -
-        '                                                                                                        viewModel.Totals.SingleOrDefault(Function(total) total.Description = "Total Spent").Total})
-
-        '    Return View("Index", viewModel)
-        'End Function
 
         Private Function GetCategoryTotals(transactions As List(Of Transaction)) As List(Of TotalsViewModel)
             Dim list = New List(Of TotalsViewModel)

@@ -2,6 +2,15 @@
     $('#monthSelect option:contains(' + month + ')').prop({ selected: true });
 }
 
+function getExpenseTransactions() {
+    window.location = "/Transaction?Month=" + $("#monthName").val() + "&Year=" + $("#yearNum").val()
+}
+
+function getIncomeTransactions() {
+    window.location = "/Transaction/Income?Month=" + $("#monthName").val() + "&Year=" + $("#yearNum").val()
+}
+
+
 function deleteTransaction(id) {
     var con = confirm("Are you sure you want to delete this transaction?");
     if (con == true) {
