@@ -6,7 +6,7 @@
 End Code
 
 
-<body onload="selectMonth('@Model.Month')">
+<body onload="selectMonth('@Model.Month'); selectTab('@Model.CategorySelected')">
     <h2 class="page-header">Transactions</h2>
 
     <div class="row">
@@ -92,7 +92,7 @@ End Code
                      </table>
                  </div>  
             </div>
-         Next
+        Next
     </div>
 </body>
 

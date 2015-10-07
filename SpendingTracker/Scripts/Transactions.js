@@ -2,6 +2,11 @@
     $('#monthSelect option:contains(' + month + ')').prop({ selected: true });
 }
 
+function selectTab(category) {
+    var tabName = "#tab_" + category
+    $("a[href=" + tabName + "]").tab('show');
+}
+
 function getExpenseTransactions() {
     window.location = "/Transaction?Month=" + $("#monthName").val() + "&Year=" + $("#yearNum").val()
 }

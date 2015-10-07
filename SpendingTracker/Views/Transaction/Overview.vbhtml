@@ -32,9 +32,9 @@ End Using*@
     @For Each name In Constants.Month_List
         @<tr>
             <td>@Html.ActionLink(name.Text, "Index", New With {.Month = name.Text, .Year = 2015})</td>
-            @*<td>@name.Text</td>*@
             @For Each cat In Constants.Category_List
-                @<td>$@Model.Totals.SingleOrDefault(Function(t) t.Description = name.Text + "_" + cat + "_2015").Total</td>
+                @<td>@Html.ActionLink("$" + Model.Totals.SingleOrDefault(Function(t) t.Description = name.Text + "_" + cat + "_2015").Total.ToString, "Index", New With {.Month = name.Text, .Year = 2015, .CategorySelected = cat})</td>
+                @*@<td>$@Model.Totals.SingleOrDefault(Function(t) t.Description = name.Text + "_" + cat + "_2015").Total</td>*@
             Next
             <td style="border-left: double">$@Model.Totals.SingleOrDefault(Function(t) t.Description = name.Text + "_2015").Total</td>
             @*<td>$@Model.Totals.SingleOrDefault(Function(t) t.Description = name.Text + "_Income_2015").Total</td>*@

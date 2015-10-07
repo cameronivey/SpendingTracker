@@ -5,6 +5,7 @@ Public Class TransactionsViewModel
     Public Property Totals As List(Of TotalsViewModel)
     Public Property Month As String
     Public Property Year As Integer
+    Public Property CategorySelected As String
 
     Public Sub New()
         Totals = New List(Of TotalsViewModel)
