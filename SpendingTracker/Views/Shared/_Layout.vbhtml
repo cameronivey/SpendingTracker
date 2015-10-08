@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Scripts/Transactions.js"></script>
     <script src="~/Scripts/Categories.js"></script>
     <title>@ViewBag.Title - Spending</title>
@@ -28,6 +29,7 @@
                     <li>@Html.ActionLink("Transactions", "Index", "Transaction")</li>
                     <li>@Html.ActionLink("Income", "Income", "Transaction")</li>
                     <li>@Html.ActionLink("Categories", "Index", "Category")</li>
+                    <li>@Html.ActionLink("Savings", "Index", "Category")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

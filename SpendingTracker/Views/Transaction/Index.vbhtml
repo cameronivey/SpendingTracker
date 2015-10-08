@@ -18,8 +18,8 @@ End Code
             @Html.DropDownListFor(Function(m) Model.Month, Constants.Month_List, New With {Key .id = "monthName", .class = "form-control", .style = "float: left", .onchange = "getExpenseTransactions()"})
         </div>
 
-        <div style = "float: right;" >
-            <a href="/Transaction/AddTransaction" class="btn btn-primary">Add A Transaction</a>
+        <div style="float: right">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTransactionModal">Add Transaction</button>
         </div>
 
     </div>
@@ -96,3 +96,21 @@ End Code
     </div>
 </body>
 
+<div id="addTransactionModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Transaction</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("AddTransactionPartial", New AddTransactionViewModel With {.Month = Model.Month, .Year = Model.Year})
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="addTransaction()">Add Transaction</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
