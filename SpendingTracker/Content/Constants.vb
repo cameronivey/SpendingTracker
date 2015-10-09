@@ -37,4 +37,9 @@
             "Food", "AlcoholBars", "Entertainment", "Shopping", "Needs", "Other"
         }
 
+    Public Shared Property MonthName_List As List(Of String) = New List(Of String) From
+       {
+           "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+       }
+
 End Class

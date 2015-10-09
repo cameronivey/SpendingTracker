@@ -1,4 +1,5 @@
-﻿Imports SpendingTracker.Domain
+﻿Imports System.Web.Script.Serialization
+Imports SpendingTracker.Domain
 Imports SpendingTracket.DataAccessLayer
 
 Namespace Controllers
@@ -7,6 +8,7 @@ Namespace Controllers
 
         Private Property context As AppContext = New AppContext()
         Private Property totalsCalculator As TotalsCalculatorService = New TotalsCalculatorService()
+        Private Property Serializer As JavaScriptSerializer = New JavaScriptSerializer()
 
         ' GET: Transaction
 
@@ -97,7 +99,7 @@ Namespace Controllers
         End Function
 
         <HttpGet()>
-        Function Income(viewModel As TransactionsViewModel) As ActionResult
+        Function Income(viewModel As IncomePageViewModel) As ActionResult
             If viewModel.Month Is Nothing Or viewModel.Year = 0 Then
                 viewModel.Month = DateTime.Now().ToString("MMMM")
                 viewModel.Year = DateTime.Now().Year
@@ -108,6 +110,20 @@ Namespace Controllers
                                                                             And t.Year = viewModel.Year).ToList
 
             viewModel.Totals.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Income", .Total = GetCostTotals(viewModel.Transactions)})
+
+
+            Dim dataList = New List(Of Decimal)
+            Dim monthList = New List(Of String)
+            For Each mon In Constants.MonthName_List
+                Dim amt = totalsCalculator.GetTotalCost(mon, viewModel.Year)
+                If amt > 0 Then
+                    monthList.Add(mon)
+                    dataList.Add(totalsCalculator.GetTotalCost(context.Categories.SingleOrDefault(Function(c) c.Name = "Income"), mon, viewModel.Year))
+                End If
+            Next
+
+            viewModel.LabelsJavascriptString = Serializer.Serialize(monthList.ToArray)
+            viewModel.DataJavascriptString = Serializer.Serialize(dataList.ToArray)
 
             Return View(viewModel)
         End Function

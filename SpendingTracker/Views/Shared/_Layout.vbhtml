@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/chart.min.js"></script>
     <script src="~/Scripts/Transactions.js"></script>
     <script src="~/Scripts/Categories.js"></script>
+    <script src="~/Scripts/charts.js"></script>
     <title>@ViewBag.Title - Spending</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
