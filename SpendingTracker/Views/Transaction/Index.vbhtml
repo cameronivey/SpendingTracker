@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.vbhtml"
 End Code
 
-
 <body onload="selectMonth('@Model.Month'); selectTab('@Model.CategorySelected')">
     <h2 class="page-header">Transactions</h2>
 

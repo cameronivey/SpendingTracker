@@ -43,8 +43,28 @@ Namespace Controllers
             Return View(viewModel)
         End Function
 
-        Function All() As ActionResult
-            Return View()
+        Function All(viewModel As AllGraphsViewModel) As ActionResult
+            If viewModel.Year = 0 Then
+                viewModel.Year = DateTime.Now.Year
+            End If
+
+            Dim incomeDataList = New List(Of Decimal)
+            Dim totalSpentDataList = New List(Of Decimal)
+            Dim monthList = New List(Of String)
+            For Each mon In Constants.MonthName_List
+                Dim amt = totalsCalculator.GetTotalCost(mon, viewModel.Year)
+                If amt > 0 Then
+                    monthList.Add(mon)
+                    incomeDataList.Add(totalsCalculator.GetTotalCost(context.Categories.SingleOrDefault(Function(c) c.Name = "Income"), mon, viewModel.Year))
+                    totalSpentDataList.Add(totalsCalculator.GetTotalCost(mon, viewModel.Year))
+                End If
+            Next
+
+            viewModel.LabelsJsString = Serializer.Serialize(monthList.ToArray)
+            viewModel.Income_DataJsString = Serializer.Serialize(incomeDataList.ToArray)
+            viewModel.TotalSpent_DataJsString = Serializer.Serialize(totalSpentDataList.ToArray)
+
+            Return View(viewModel)
         End Function
     End Class
 End Namespace

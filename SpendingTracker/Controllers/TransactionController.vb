@@ -111,7 +111,6 @@ Namespace Controllers
 
             viewModel.Totals.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Income", .Total = GetCostTotals(viewModel.Transactions)})
 
-
             Dim dataList = New List(Of Decimal)
             Dim monthList = New List(Of String)
             For Each mon In Constants.MonthName_List
