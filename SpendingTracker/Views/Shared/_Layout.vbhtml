@@ -8,6 +8,7 @@
     <script src="~/Scripts/Transactions.js"></script>
     <script src="~/Scripts/Category.js"></script>
     <script src="~/Scripts/charts.js"></script>
+    <script src="~/Scripts/savings.js"></script>
     <title>@ViewBag.Title - Spending</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -36,7 +37,8 @@
                     <li>@Html.ActionLink("Transactions", "Index", "Transaction")</li>
                     <li>@Html.ActionLink("Income", "Income", "Transaction")</li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" href="/Category/All">Categories</a>
+                        @Html.ActionLink("Categories", "All", "Category", New With {.Year = 2015}, New With {.class = "dropdown-toggle", .role = "button"})
+                        @*<a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" href="/Category/AllCharts">Categories</a>*@
                         <ul class="dropdown-menu"  style="background-color: black;">
                             <li>@Html.ActionLink("Food", "Index", "Category", New With {.CategoryName = "Food"}, New With {.style = "color: White"})</li>
                             <li>@Html.ActionLink("Alcohol / Bars", "Index", "Category", New With {.CategoryName = "AlcoholBars"}, New With {.style = "color: White"})</li>
@@ -46,7 +48,7 @@
                             <li>@Html.ActionLink("Other", "Index", "Category", New With {.CategoryName = "Other"}, New With {.style = "color: White"})</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Savings", "Index", "Category")</li>
+                    <li>@Html.ActionLink("Savings", "Index", "Savings")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

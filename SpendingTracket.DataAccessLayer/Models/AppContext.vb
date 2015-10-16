@@ -14,6 +14,7 @@ Public Class AppContext
 
     Public Property Transactions As DbSet(Of Transaction)
     Public Property Categories As DbSet(Of Category)
+    Public Property SavingsTransactions As DbSet(Of SavingsTransaction)
 
 End Class
 

@@ -37,6 +37,11 @@ Namespace Migrations
                 New Category() With {.Name = "Other"},
                 New Category() With {.Name = "Income"})
 
+            context.SavingsTransactions.AddOrUpdate(
+                Function(t) New With {t.Type, t.DateOfTransaction, t.Description, t.Amount},
+                New SavingsTransaction() With {.Type = SavingsTransactionType.Deposit, .DateOfTransaction = New Date(2015, 6, 22),
+                                                .Description = "Post Europe Trip Balance", .Amount = 454.71})
+
 
         End Sub
 

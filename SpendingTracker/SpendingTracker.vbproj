@@ -209,6 +209,7 @@
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\CategoryController.vb" />
     <Compile Include="Controllers\ManageController.vb" />
+    <Compile Include="Controllers\SavingsController.vb" />
     <Compile Include="Controllers\TransactionController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,10 +233,14 @@
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
     <Compile Include="Services\TotalsCalculatorService.vb" />
+    <Compile Include="ViewModels\AddSavingsViewModel.vb" />
     <Compile Include="ViewModels\AddTransactionPageViewModel.vb" />
     <Compile Include="ViewModels\AddTransactionViewModel.vb" />
+    <Compile Include="ViewModels\AllGraphsViewModel.vb" />
     <Compile Include="ViewModels\CategoryViewModel.vb" />
+    <Compile Include="ViewModels\EditSavingsViewModel.vb" />
     <Compile Include="ViewModels\IncomePageViewModel.vb" />
+    <Compile Include="ViewModels\SavingsViewModel.vb" />
     <Compile Include="ViewModels\TotalsViewModel.vb" />
     <Compile Include="ViewModels\EditTransactionViewModel.vb" />
     <Compile Include="ViewModels\TransactionsViewModel.vb" />
@@ -251,6 +256,26 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui.theme.min.css" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -272,7 +297,10 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\Overview.js" />
+    <Content Include="Scripts\Savings.js" />
     <Content Include="Scripts\Transactions.js" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.vbhtml" />
     <Content Include="Views\Account\ConfirmEmail.vbhtml" />
@@ -302,6 +330,11 @@
     <Content Include="Views\Transaction\Overview.vbhtml" />
     <Content Include="Views\Shared\AddTransactionPartial.vbhtml" />
     <Content Include="Views\Category\All.vbhtml" />
+    <Content Include="Views\Category\AllCharts.vbhtml" />
+    <Content Include="Views\Category\Savings.vbhtml" />
+    <Content Include="Views\Savings\Index.vbhtml" />
+    <Content Include="Views\Shared\AddSavingsPartial.vbhtml" />
+    <Content Include="Views\Savings\Edit.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

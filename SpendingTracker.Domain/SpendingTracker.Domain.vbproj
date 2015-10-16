@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Category.vb" />
+    <Compile Include="Models\SavingsTransaction.vb" />
     <Compile Include="Models\Transaction.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

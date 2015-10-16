@@ -1,4 +1,6 @@
-﻿Public Class Constants
+﻿Imports SpendingTracker.Domain
+
+Public Class Constants
     Public Shared Property Month_List As IEnumerable(Of SelectListItem) = New List(Of SelectListItem) From
                 {
                     New SelectListItem() With {.Value = "January", .Text = "January"},
@@ -20,6 +22,12 @@
                     New SelectListItem() With {.Value = "2015", .Text = "2015"},
                     New SelectListItem() With {.Value = "2016", .Text = "2016"}
                 }
+
+    Public Shared Property SavingsTransactionType_SelectList As IEnumerable(Of SelectListItem) = New List(Of SelectListItem) From
+               {
+                   New SelectListItem() With {.Value = SavingsTransactionType.Deposit, .Text = "Deposit"},
+                   New SelectListItem() With {.Value = SavingsTransactionType.Withdrawal, .Text = "Withdrawal"}
+               }
 
     Public Shared Property Category_SelectList As IEnumerable(Of SelectListItem) = New List(Of SelectListItem) From
                {
