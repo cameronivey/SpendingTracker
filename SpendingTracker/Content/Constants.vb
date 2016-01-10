@@ -50,4 +50,15 @@ Public Class Constants
            "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
        }
 
+    Public Shared Property CurrentStaticBills As Dictionary(Of Object, Object) = New Dictionary(Of Object, Object) From
+        {
+            {"Rent", 848},
+            {"Parking", 100},
+            {"Car", 270},
+            {"Phone", 50},
+            {"Cable", 35}
+        }
+
+    Public Shared Property CurrentPayCheckAmount As Decimal = 2145.4
+
 End Class

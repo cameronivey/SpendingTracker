@@ -33,7 +33,8 @@ End Code
         <div class="col-lg-6">
             <div class="col-lg-6">
                 <h4 style="text-align: center">@Model.CategoryName @Model.Year</h4>
-                <canvas id="categoryChart" width="500" height="250"></canvas>
+                <div id="categoryChartDiv"></div>
+                @*<canvas id="categoryChart" width="500" height="250"></canvas>*@
             </div>
         </div>
     </div>

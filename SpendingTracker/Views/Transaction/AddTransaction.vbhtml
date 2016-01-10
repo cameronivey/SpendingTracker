@@ -1,4 +1,4 @@
-﻿@ModelType AddTransactionViewModel
+﻿@ModelType AddTransactionsViewModel
 
 @Code
     ViewData("Title") = "AddTransaction"
@@ -6,34 +6,24 @@ End Code
 
 <body>
     <h2 class="page-header">Add Transaction</h2>
-    <div class="col-lg-6">
+    <div class="col-lg-7">
 
         @Using (Html.BeginForm("AddTransaction", "Transaction"))
             @<fieldset>
-                 <div class="form-group" style="float: left">
-                     @Html.LabelFor(Function(m) m.Year)
-                     @Html.DropDownListFor(Function(m) m.Year, Constants.Year_List, New With {Key .class = "form-control", .style = "float:left"})
-                 </div>
-
-                 <div class="form-group" style="float: left">
-                     @Html.LabelFor(Function(m) Model.Month)
-                     @Html.DropDownListFor(Function(m) Model.Month, Constants.Month_List, New With {Key .class = "form-control", .style = "float: left"})
-                 </div>
-
-                 <div class="form-group" style="clear: both">
-                     @Html.DropDownListFor(Function(m) Model.CategoryId, Constants.Category_SelectList, New With {Key .class = "form-control", .style = "float: left; width: 120px"})<br />
-                 </div>
-
-                @Html.TextBoxFor(Function(m) Model.Description, New With {Key .class = "form-control", .maxlength = "20", .style = "width: 200px", .placeholder = "Description"})<br />
-
-                @Html.TextBoxFor(Function(m) Model.Cost, New With {Key .class = "form-control", .maxlength = "7", .style = "width: 80px", .placeholder = "$$$"})<br />
-
-                <button type="submit" class="btn btn-success">Add Transaction</button>
+                @For i As Integer = 0 To Model.TransactionViewModels.Count - 1
+                    @Html.DropDownListFor(Function(m) m.TransactionViewModels(i).Year, Constants.Year_List, New With {Key .class = "form-control", .style = "float:left; width: 85px"})
+                    @Html.DropDownListFor(Function(m) Model.TransactionViewModels(i).Month, Constants.Month_List, New With {Key .class = "form-control", .style = "float: left; width: 125px"})
+                    @Html.DropDownListFor(Function(m) Model.TransactionViewModels(i).CategoryId, Constants.Category_SelectList, New With {Key .class = "form-control", .style = "float: left; width: 120px"})
+                    @Html.TextBoxFor(Function(m) Model.TransactionViewModels(i).Description, New With {Key .class = "form-control", .maxlength = "20", .style = "float: left; width: 200px", .placeholder = "Description"})
+                    @Html.TextBoxFor(Function(m) Model.TransactionViewModels(i).Cost, New With {Key .class = "form-control", .maxlength = "7", .style = "float: left; width: 80px", .placeholder = "$$$"})
+                Next
+                 
+                <button type="submit" class="btn btn-success">Add Transactions</button>
             </fieldset>
         End Using
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-5">
         <h4>Recently Added</h4>
          <table class="table">
              <tr>

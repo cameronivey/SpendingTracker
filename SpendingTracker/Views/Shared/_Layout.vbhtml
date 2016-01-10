@@ -7,8 +7,13 @@
     <script src="~/Scripts/chart.min.js"></script>
     <script src="~/Scripts/Transactions.js"></script>
     <script src="~/Scripts/Category.js"></script>
-    <script src="~/Scripts/charts.js"></script>
+    <script src="~/Scripts/graphs.js"></script>
     <script src="~/Scripts/savings.js"></script>
+    <script src="~/Scripts/vendors.js"></script>
+
+    <script src="~/Scripts/bootstrap.js" type="text/javascript"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="type/css"/>
+
     <title>@ViewBag.Title - Spending</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -49,6 +54,7 @@
                         </ul>
                     </li>
                     <li>@Html.ActionLink("Savings", "Index", "Savings")</li>
+                    <li>@Html.ActionLink("Add", "AddTransaction", "Transaction")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

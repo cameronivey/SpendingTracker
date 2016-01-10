@@ -7,7 +7,7 @@ Namespace Controllers
         Inherits Controller
 
         Private context As AppContext = New AppContext()
-        Private Property totalsCalculator As TotalsCalculatorService = New TotalsCalculatorService()
+        Private Property totalsCalculator As TotalsCalculator = New TotalsCalculator()
         Private Property Serializer As JavaScriptSerializer = New JavaScriptSerializer()
 
         ' GET: Savings
@@ -25,8 +25,9 @@ Namespace Controllers
                 Dim amt = totalsCalculator.GetTotalCost(mon, 2015)
                 If amt > 0 Then
                     labelList.Add(mon)
-                    Dim firstDayOfMon = New Date(DateTime.Now.Year, Constants.MonthName_List.IndexOf(mon) + 1, 1)
-                    Dim transactions = context.SavingsTransactions.Where(Function(t) t.DateOfTransaction < firstDayOfMon)
+                    Dim monthIndex = Constants.MonthName_List.IndexOf(mon) + 1
+                    Dim lastDayOfMon = New Date(DateTime.Now.Year, monthIndex, DateTime.DaysInMonth(DateTime.Now.Year, monthIndex))
+                    Dim transactions = context.SavingsTransactions.Where(Function(t) t.DateOfTransaction <= lastDayOfMon)
                     If (transactions.Count > 0) Then
                         dataList.Add(transactions.Sum(Function(t) t.Amount))
                     Else
@@ -82,6 +83,35 @@ Namespace Controllers
             context.SaveChanges()
 
             Return RedirectToAction("Index")
+        End Function
+
+        <HttpPost()>
+        Function GetSavingsChartData(year As Integer) As ActionResult
+            Dim viewModel = New ChartDataViewModel()
+
+            Dim dataList = New List(Of Decimal)
+            Dim labelList = New List(Of String)
+
+            For Each mon In Constants.MonthName_List
+                Dim totalAmount = 0
+                Dim amt = totalsCalculator.GetTotalCost(mon, year)
+                If amt > 0 Then
+                    labelList.Add(mon)
+                    Dim monthIndex = Constants.MonthName_List.IndexOf(mon) + 1
+                    Dim lastDayOfMon = New Date(DateTime.Now.Year, monthIndex, DateTime.DaysInMonth(DateTime.Now.Year, monthIndex))
+                    Dim transactions = context.SavingsTransactions.Where(Function(t) t.DateOfTransaction <= lastDayOfMon)
+                    If (transactions.Count > 0) Then
+                        dataList.Add(transactions.Sum(Function(t) t.Amount))
+                    Else
+                        dataList.Add(0)
+                    End If
+                End If
+            Next
+
+            viewModel.Labels = labelList.ToArray
+            viewModel.Data = dataList.ToArray
+
+            Return Json(viewModel)
         End Function
     End Class
 End Namespace

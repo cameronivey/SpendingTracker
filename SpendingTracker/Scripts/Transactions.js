@@ -1,4 +1,10 @@
-﻿function selectMonth(month) {
+﻿$(function () {
+
+
+
+})
+
+function selectMonth(month) {
     $('#monthSelect option:contains(' + month + ')').prop({ selected: true });
 }
 

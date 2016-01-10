@@ -1,7 +1,7 @@
 ﻿Imports SpendingTracker.Domain
 Imports SpendingTracket.DataAccessLayer
 
-Public Class TotalsCalculatorService
+Public Class TotalsCalculator
     Private Property context As AppContext = New AppContext()
 
     Public Function GetTotalViewModel(type As String, Description As String, category As Category, month As String, year As Integer) As TotalsViewModel

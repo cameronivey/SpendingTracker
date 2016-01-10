@@ -211,11 +211,15 @@
     <Compile Include="Controllers\ManageController.vb" />
     <Compile Include="Controllers\SavingsController.vb" />
     <Compile Include="Controllers\TransactionController.vb" />
+    <Compile Include="Controllers\VendorController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.vb" />
+    <Compile Include="Models\ChartDataViewModel.vb" />
     <Compile Include="Models\ManageViewModels.vb" />
+    <Compile Include="Models\VendorIndexViewModel.vb" />
+    <Compile Include="Models\VendorViewModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -232,9 +236,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
-    <Compile Include="Services\TotalsCalculatorService.vb" />
+    <Compile Include="Services\AveragesCalculator.vb" />
+    <Compile Include="Services\ProjectionsCalculator.vb" />
+    <Compile Include="Services\TotalsCalculator.vb" />
+    <Compile Include="Services\VendorService.vb" />
     <Compile Include="ViewModels\AddSavingsViewModel.vb" />
-    <Compile Include="ViewModels\AddTransactionPageViewModel.vb" />
+    <Compile Include="ViewModels\AddTransactionsViewModel.vb" />
     <Compile Include="ViewModels\AddTransactionViewModel.vb" />
     <Compile Include="ViewModels\AllGraphsViewModel.vb" />
     <Compile Include="ViewModels\CategoryViewModel.vb" />
@@ -293,7 +300,7 @@
     <Content Include="Scripts\category.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\chart.min.js" />
-    <Content Include="Scripts\charts.js" />
+    <Content Include="Scripts\graphs.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -302,6 +309,7 @@
     <Content Include="Scripts\Overview.js" />
     <Content Include="Scripts\Savings.js" />
     <Content Include="Scripts\Transactions.js" />
+    <Content Include="Scripts\Vendors.js" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.vbhtml" />
     <Content Include="Views\Account\ConfirmEmail.vbhtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.vbhtml" />
@@ -331,10 +339,11 @@
     <Content Include="Views\Shared\AddTransactionPartial.vbhtml" />
     <Content Include="Views\Category\All.vbhtml" />
     <Content Include="Views\Category\AllCharts.vbhtml" />
-    <Content Include="Views\Category\Savings.vbhtml" />
     <Content Include="Views\Savings\Index.vbhtml" />
     <Content Include="Views\Shared\AddSavingsPartial.vbhtml" />
     <Content Include="Views\Savings\Edit.vbhtml" />
+    <Content Include="Views\Vendor\Index.vbhtml" />
+    <Content Include="Views\Vendor\VendorPage.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -368,6 +377,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Chart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

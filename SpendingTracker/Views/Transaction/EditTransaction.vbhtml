@@ -23,6 +23,7 @@ End Code
             </div>
 
             @Html.TextBoxFor(Function(m) Model.Description, New With {Key .class = "form-control", .maxlength = "20", .style = "width: 200px"})<br />
+            @Html.TextBoxFor(Function(m) Model.Vendor, New With {Key .class = "form-control", .maxlength = "20", .style = "width: 200px"})<br />
 
             @Html.TextBoxFor(Function(m) Model.Cost, New With {Key .class = "form-control", .maxlength = "7", .style = "width: 80px"})<br />
 

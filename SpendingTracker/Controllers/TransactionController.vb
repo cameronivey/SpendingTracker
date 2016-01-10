@@ -7,8 +7,9 @@ Namespace Controllers
         Inherits Controller
 
         Private Property context As AppContext = New AppContext()
-        Private Property totalsCalculator As TotalsCalculatorService = New TotalsCalculatorService()
+        Private Property totalsCalculator As TotalsCalculator = New TotalsCalculator()
         Private Property Serializer As JavaScriptSerializer = New JavaScriptSerializer()
+        Private Property vendorService As VendorService = New VendorService()
 
         ' GET: Transaction
 
@@ -21,6 +22,8 @@ Namespace Controllers
 
             viewModel.Transactions = context.Transactions.Where(Function(t) t.Month = viewModel.Month And t.Year = viewModel.Year).ToList
             viewModel.Totals.AddRange(GetCategoryTotals(viewModel.Transactions))
+            viewModel.Totals.AddRange(GetCategoryAverages(viewModel.Year))
+            viewModel.Totals.AddRange(GetCategoryProjections(viewModel.Year, viewModel.Month))
             viewModel.Totals.AddRange(GetSummaryTotals(viewModel.Transactions))
 
             Return View(viewModel)
@@ -28,7 +31,7 @@ Namespace Controllers
 
         <HttpGet()>
         Function AddTransaction() As ActionResult
-            Dim viewModel = New AddTransactionViewModel
+            Dim viewModel = New AddTransactionsViewModel
             With viewModel
                 .RecentTransactions = context.Transactions.OrderByDescending(Function(t) t.Id).AsQueryable.Take(10).ToList
             End With
@@ -37,18 +40,25 @@ Namespace Controllers
         End Function
 
         <HttpPost()>
-        Function AddTransaction(viewModel As AddTransactionViewModel) As ActionResult
-            Dim newTransaction = New Transaction
-            With newTransaction
-                .Category = context.Categories.SingleOrDefault(Function(c) c.Id = viewModel.CategoryId)
-                .Description = viewModel.Description
-                .Cost = viewModel.Cost
-                .Month = viewModel.Month
-                .Year = viewModel.Year
-            End With
+        Function AddTransaction(viewModel As AddTransactionsViewModel) As ActionResult
+            For Each transaction In viewModel.TransactionViewModels
+                Dim vendorId = vendorService.GetVendor(transaction.Description)
+                If transaction.Description IsNot Nothing Then
+                    Dim newTransaction = New Transaction
+                    With newTransaction
+                        .Category = context.Categories.SingleOrDefault(Function(c) c.Id = transaction.CategoryId)
+                        .Description = transaction.Description
+                        .Vendor = context.Vendors.SingleOrDefault(Function(v) v.Id = vendorId)
+                        .Cost = transaction.Cost
+                        .Month = transaction.Month
+                        .Year = transaction.Year
+                    End With
 
-            context.Transactions.Add(newTransaction)
-            context.Categories.SingleOrDefault(Function(c) c.Id = viewModel.CategoryId).Transactions.Add(newTransaction)
+                    context.Transactions.Add(newTransaction)
+                    context.Categories.SingleOrDefault(Function(c) c.Id = transaction.CategoryId).Transactions.Add(newTransaction)
+                End If
+            Next
+
             context.SaveChanges()
 
             Return RedirectToAction("AddTransaction", "Transaction")
@@ -83,6 +93,15 @@ Namespace Controllers
             transaction.Cost = viewModel.Cost
             transaction.Month = viewModel.Month
             transaction.Year = viewModel.Year
+
+            Dim vendor = context.Vendors.SingleOrDefault(Function(v) v.Name = viewModel.Vendor)
+            If vendor IsNot Nothing Then
+                transaction.Vendor = vendor
+            Else
+                Dim newVendor = New Vendor() With {.Name = viewModel.Vendor}
+                context.Vendors.Add(newVendor)
+                transaction.Vendor = newVendor
+            End If
 
             context.SaveChanges()
 
@@ -175,7 +194,7 @@ Namespace Controllers
             Dim list = New List(Of TotalsViewModel)
 
             list.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Spent Without Needs", .Total = GetCostTotals(transactions.Where(Function(t) t.Category.Name <> "Needs" And t.Category.Name <> "Income").ToList)})
-            list.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Needs", .Total = GetCostTotals(transactions.Where(Function(t) t.Category.Name = "Needs").ToList)})
+            'list.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Needs", .Total = GetCostTotals(transactions.Where(Function(t) t.Category.Name = "Needs").ToList)})
             list.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Spent", .Total = GetCostTotals(transactions.Where(Function(t) t.Category.Name <> "Income").ToList)})
             list.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Total Income", .Total = GetCostTotals(transactions.Where(Function(t) t.Category.Name = "Income").ToList)})
             list.Add(New TotalsViewModel With {.Type = "Sum", .Description = "Net Income", .Total = list.SingleOrDefault(Function(total) total.Description = "Total Income").Total -
@@ -191,6 +210,50 @@ Namespace Controllers
             Next
 
             Return sum
+        End Function
+
+        Private Function GetCategoryAverages(year As Integer) As IEnumerable(Of TotalsViewModel)
+            Dim list = New List(Of TotalsViewModel)
+            Dim averagesCalculator = New AveragesCalculator()
+
+            For Each category In context.Categories
+                Dim average = averagesCalculator.GetCategoryMonthlyAverage(category.Name.ToString(), year)
+                list.Add(New TotalsViewModel With {.Type = "Average", .Description = category.Name, .Total = average})
+            Next
+
+            Dim avgIncome = list.SingleOrDefault(Function(c) c.Description = "Income").Total
+            Dim avgTotalSpent = list.Sum(Function(t) t.Total) - avgIncome
+            Dim avgTotalSpentWithoutNeeds = avgTotalSpent - list.SingleOrDefault(Function(c) c.Description = "Needs").Total
+            Dim avgNetIncome = avgIncome - avgTotalSpent
+
+            list.Add(New TotalsViewModel With {.Type = "Average", .Description = "Total Income", .Total = avgIncome})
+            list.Add(New TotalsViewModel With {.Type = "Average", .Description = "Total Spent", .Total = avgTotalSpent})
+            list.Add(New TotalsViewModel With {.Type = "Average", .Description = "Total Spent Without Needs", .Total = avgTotalSpentWithoutNeeds})
+            list.Add(New TotalsViewModel With {.Type = "Average", .Description = "Net Income", .Total = avgNetIncome})
+
+            Return list
+        End Function
+
+        Private Function GetCategoryProjections(year As Integer, month As String)
+            Dim list = New List(Of TotalsViewModel)
+            Dim projectionsCalculator = New ProjectionsCalculator()
+
+            For Each category In context.Categories
+                Dim projectedTotal = projectionsCalculator.GetCategoryMonthProjection(category.Name, month, year)
+                list.Add(New TotalsViewModel With {.Type = "Projection", .Description = category.Name, .Total = projectedTotal})
+            Next
+
+            Dim projIncome = list.SingleOrDefault(Function(c) c.Description = "Income").Total
+            Dim projTotalSpent = list.Sum(Function(t) t.Total) - projIncome
+            Dim projTotalSpentWithoutNeeds = projTotalSpent - list.SingleOrDefault(Function(c) c.Description = "Needs").Total
+            Dim projNetIncome = projIncome - projTotalSpent
+
+            list.Add(New TotalsViewModel With {.Type = "Projection", .Description = "Total Income", .Total = projIncome})
+            list.Add(New TotalsViewModel With {.Type = "Projection", .Description = "Total Spent", .Total = projTotalSpent})
+            list.Add(New TotalsViewModel With {.Type = "Projection", .Description = "Total Spent Without Needs", .Total = projTotalSpentWithoutNeeds})
+            list.Add(New TotalsViewModel With {.Type = "Projection", .Description = "Net Income", .Total = projNetIncome})
+
+            Return list
         End Function
 
     End Class

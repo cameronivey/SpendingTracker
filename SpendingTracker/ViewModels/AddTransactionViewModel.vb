@@ -16,6 +16,4 @@ Public Class AddTransactionViewModel
 
     Public Property Year As String
 
-    Public Property RecentTransactions As List(Of Transaction)
-
 End Class

@@ -20,7 +20,6 @@ End Code
         <div style="float: right">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addTransactionModal">Add Transaction</button>
         </div>
-
     </div>
 
     <ul class="nav nav-tabs">
@@ -33,34 +32,54 @@ End Code
         <li role="presentation"><a data-toggle="tab" href="#tab_Other">Other</a></li>
     </ul>
 
-    
     <div class="tab-content">
         <div id="tab_Summary" class="tab-pane fade in active">
             <div class="col-lg-6">
                 <table class="table table-striped">
                     <thead>
-                        <tr><td style="font-size: large">Total Spending For @Model.Month, @Model.Year</td></tr>
+                        <tr><td colspan="5" style="font-size: large">Total Spending For @Model.Month, @Model.Year</td></tr>
+                        <tr>
+                            <th>Category</th>
+                            <th>Projected</th>
+                            <th>Average</th>
+                            <th style="text-align: right;border-bottom: solid">Total</th>
+                        </tr>
                     </thead>
                     @For Each category In Constants.Category_List
                         @<tr>
                             <td>@category</td>
-                            <td align="right">$@Model.Totals.SingleOrDefault(Function(t) t.Description = category).Total</td>
+                            <td>@Model.Totals.SingleOrDefault(Function(t) t.Type = "Projection" And t.Description = category).Total.ToString("C")</td>
+                             <td>@Model.Totals.SingleOrDefault(Function(t) t.Type = "Average" And t.Description = category).Total.ToString("C")</td>
+                            <td align="right" style="border-left: solid; border-right: solid"><b>$@Model.Totals.SingleOrDefault(Function(t) t.Type = "Category" And t.Description = category).Total</b></td>
                         </tr>
                     Next
                     <tfoot>
                         <tr>
                             <td><b>Total:</b></td>
-                            <td align="right" style="border: inset">$@Model.Totals.SingleOrDefault(Function(t) t.Description = "Total Spent").Total</td>
+                            <td>@Model.Totals.SingleOrDefault(Function(t) t.Type = "Projection" And t.Description = "Total Spent").Total.ToString("C")</td>
+                            <td>@Model.Totals.SingleOrDefault(Function(t) t.Type = "Average" And t.Description = "Total Spent").Total.ToString("C")</td>
+                            <td align="right" style="border: inset; border-top: solid">$@Model.Totals.SingleOrDefault(Function(t) t.Type = "Sum" And t.Description = "Total Spent").Total</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
             <div class="col-lg-6">
                 <table class="table table-striped">
+                    <thead>
+                        <tr><td colspan="5" style="font-size: large">Totals</td></tr>
+                    </thead>
+                    <tr>
+                        <th></th>
+                        <th>Projected</th>
+                        <th>Average</th>
+                        <th style="text-align: right">Total</th>
+                    </tr>
                     @For Each total In Model.Totals.Where(Function(t) t.Type = "Sum")
                         @<tr>
                             <td>@total.Description</td>
-                            <td>$@total.Total</td>
+                            <td>@Model.Totals.SingleOrDefault(Function(t) t.Type = "Projection" And t.Description = total.Description).Total.ToString("C")</td>
+                            <td>@Model.Totals.SingleOrDefault(Function(t) t.Type = "Average" And t.Description = total.Description).Total.ToString("C")</td>
+                            <td align="right">$@total.Total</td>
                         </tr>
                     Next
                 </table>
@@ -76,7 +95,7 @@ End Code
                          </thead>
                          @For Each transaction In Model.Transactions.Where(Function(t) t.Category.Name = category)
                              @<tr>
-                                 <td>@transaction.Description</td>
+                                 <td>@transaction.Description <a href="/Vendor/VendorPage/@transaction.vendor.Id" style="font-size: xx-small">View Vendor Page</a></td>
                                  <td><a href="/Transaction/EditTransaction/@transaction.Id">Edit</a></td>
                                  <td align="right">$@transaction.Cost</td>
                              </tr>
@@ -85,7 +104,7 @@ End Code
                              <tr>
                                  <td><b>Total:</b></td>
                                  <td></td>
-                                 <td align="right" style="border: inset">$@Model.Totals.SingleOrDefault(Function(t) t.Description = category).Total</td>
+                                 <td align="right" style="border: inset">$@Model.Totals.SingleOrDefault(Function(t) t.type = "Category" And t.Description = category).Total</td>
                              </tr>
                          </tfoot>
                      </table>
