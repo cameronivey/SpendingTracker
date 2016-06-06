@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SpendingTracker", "SpendingTracker\SpendingTracker.vbproj", "{F4798C84-4125-468F-BBB5-870809E41AD4}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SpendingTracker.Domain", "SpendingTracker.Domain\SpendingTracker.Domain.vbproj", "{B0C7A203-8A27-4EA0-880D-D790A4B509EB}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SpendingTracker.DataAccessLayer", "SpendingTracket.DataAccessLayer\SpendingTracker.DataAccessLayer.vbproj", "{7DC74DA6-CEEC-4F4E-9B3F-FC5FCDC9CE7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendingTrackerAngular", "SpendingTrackerAngular\SpendingTrackerAngular.csproj", "{E9479A94-CB6C-40B7-A6D5-4D1583212AA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7DC74DA6-CEEC-4F4E-9B3F-FC5FCDC9CE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DC74DA6-CEEC-4F4E-9B3F-FC5FCDC9CE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DC74DA6-CEEC-4F4E-9B3F-FC5FCDC9CE7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9479A94-CB6C-40B7-A6D5-4D1583212AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9479A94-CB6C-40B7-A6D5-4D1583212AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9479A94-CB6C-40B7-A6D5-4D1583212AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9479A94-CB6C-40B7-A6D5-4D1583212AA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
