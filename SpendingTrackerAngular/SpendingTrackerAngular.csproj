@@ -120,6 +120,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\app.js" />
+    <Content Include="app\controllers\categoryController.js" />
+    <Content Include="app\controllers\transactionController.js" />
+    <Content Include="app\controllers\summaryController.js" />
+    <Content Include="app\views\category.html" />
+    <Content Include="app\views\summary.html" />
+    <Content Include="app\views\transaction.html" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="index.html" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="scripts\angular-animate.js" />
@@ -147,6 +156,10 @@
     <Content Include="scripts\angular-scenario.js" />
     <Content Include="scripts\angular-touch.js" />
     <Content Include="scripts\angular-touch.min.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="scripts\angular.js" />
     <Content Include="scripts\angular.min.js" />
     <Content Include="scripts\i18n\angular-locale_aa-dj.js" />

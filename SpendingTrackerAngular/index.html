@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html ng-app="SpendingTracker" class="ng-scope">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-resource.min.js"></script>
+    <script src="scripts/angular-route.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/controllers/categoryController.js"></script>
+    <script src="app/controllers/summaryController.js"></script>
+    <script src="app/controllers/transactionController.js"></script>  
+    <script src="scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    <script src="scripts/angular-animate.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="Content/ui-bootstrap-csp.css" />-->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+   
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Spending Tracker</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#/category">Category</a></>
+                <li><a href="#/summary">Summary</a></li>
+                <li><a href="#/transaction">Transaction</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user">Sign Up</span></a> </li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in">Login</span></a> </li>
+
+            </ul>
+           
+        </div>
+
+    </nav>
+
+    <div>
+        <div class="container-fluid">
+            <div ng-view></div>
+        </div>
+    </div>
+</body>
+</html>
